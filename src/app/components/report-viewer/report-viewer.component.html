@@ -1,0 +1,10 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Employee Reports</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <button mat-raised-button color="primary" (click)="generateReport('EmployeeListReport', 'PDF')">Download Employee List (PDF)</button>
+    <button mat-raised-button color="primary" (click)="generateReport('EmployeeListReport', 'Excel')">Download Employee List (Excel)</button>
+    <button mat-raised-button color="warn" routerLink="/employees">Back to Employees</button>
+  </mat-card-content>
+</mat-card>
