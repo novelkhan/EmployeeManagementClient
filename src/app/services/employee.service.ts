@@ -7,8 +7,8 @@ import { Employee } from '../models/employee.model';
   providedIn: 'root'
 })
 export class EmployeeService {
-  private apiUrl = 'https://localhost:7287/api/Employees'; // ASP.NET Core API URL
-  private reportUrl = 'https://localhost:7287/api/Report/generate'; // Report API URL
+  private apiUrl = 'https://localhost:7287/api/Employees'; // API URL
+  private reportUrl = 'https://localhost:7287/api/Report'; // Report API URL
 
   constructor(private http: HttpClient) { }
 
@@ -33,6 +33,10 @@ export class EmployeeService {
   }
 
   generateReport(reportName: string, format: string): Observable<Blob> {
-    return this.http.get(`${this.reportUrl}?reportName=${reportName}&format=${format}`, { responseType: 'blob' });
+    return this.http.get(`${this.reportUrl}/generate?reportName=${reportName}&format=${format}`, { responseType: 'blob' });
+  }
+
+  previewReport(reportName: string): Observable<Blob> {
+    return this.http.get(`${this.reportUrl}/preview?reportName=${reportName}`, { responseType: 'blob' });
   }
 }

@@ -3,8 +3,23 @@
     <mat-card-title>Employee Reports</mat-card-title>
   </mat-card-header>
   <mat-card-content>
+    <button mat-raised-button color="primary" (click)="previewReport('EmployeeListReport')">Preview Employee List</button>
     <button mat-raised-button color="primary" (click)="generateReport('EmployeeListReport', 'PDF')">Download Employee List (PDF)</button>
     <button mat-raised-button color="primary" (click)="generateReport('EmployeeListReport', 'Excel')">Download Employee List (Excel)</button>
     <button mat-raised-button color="warn" routerLink="/employees">Back to Employees</button>
+
+    <div *ngIf="showPreview && pdfSrc" class="preview-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Employee List Preview</mat-card-title>
+          <button mat-icon-button color="warn" (click)="closePreview()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-card-header>
+        <mat-card-content>
+          <ngx-extended-pdf-viewer [src]="pdfSrc" [height]="'80vh'" [showHandToolButton]="true"></ngx-extended-pdf-viewer>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </mat-card-content>
 </mat-card>
