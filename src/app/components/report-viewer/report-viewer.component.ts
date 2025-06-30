@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'; // ✅ Add this
 import { saveAs } from 'file-saver';
 import { EmployeeService } from 'src/app/services/employee.service';
 
@@ -11,7 +12,17 @@ export class ReportViewerComponent {
   pdfSrc: Blob | undefined;
   showPreview: boolean = false;
 
-  constructor(private employeeService: EmployeeService) { }
+  iframeUrl: SafeResourceUrl; // ✅ For iframe
+
+  constructor(
+    private employeeService: EmployeeService,
+    private sanitizer: DomSanitizer // ✅ Required for safe iframe src
+  ) {
+    // ✅ Set iframe display URL (adjust if API changes)
+    this.iframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+      'https://localhost:7287/api/Report/preview?reportName=EmployeeListReport'
+    );
+  }
 
   generateReport(reportName: string, format: string): void {
     this.employeeService.generateReport(reportName, format).subscribe({
@@ -28,7 +39,7 @@ export class ReportViewerComponent {
   previewReport(reportName: string): void {
     this.employeeService.previewReport(reportName).subscribe({
       next: (blob) => {
-        console.log('Blob received:', blob); // ডিবাগিংয়ের জন্য
+        console.log('Blob received:', blob);
         this.pdfSrc = blob;
         this.showPreview = true;
       },

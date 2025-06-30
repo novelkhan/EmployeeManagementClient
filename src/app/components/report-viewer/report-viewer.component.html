@@ -2,12 +2,14 @@
   <mat-card-header>
     <mat-card-title>Employee Reports</mat-card-title>
   </mat-card-header>
+
   <mat-card-content>
     <button mat-raised-button color="primary" (click)="previewReport('EmployeeListReport')">Preview Employee List</button>
     <button mat-raised-button color="primary" (click)="generateReport('EmployeeListReport', 'PDF')">Download Employee List (PDF)</button>
     <button mat-raised-button color="primary" (click)="generateReport('EmployeeListReport', 'Excel')">Download Employee List (Excel)</button>
     <button mat-raised-button color="warn" routerLink="/employees">Back to Employees</button>
 
+    <!-- ngx-extended-pdf-viewer preview -->
     <div *ngIf="showPreview && pdfSrc" class="preview-container">
       <mat-card>
         <mat-card-header>
@@ -17,9 +19,19 @@
           </button>
         </mat-card-header>
         <mat-card-content>
-          <ngx-extended-pdf-viewer [src]="pdfSrc" [height]="'80vh'" [showHandToolButton]="true"></ngx-extended-pdf-viewer>
+          <ngx-extended-pdf-viewer
+            [src]="pdfSrc"
+            [height]="'80vh'"
+            [showHandToolButton]="true">
+          </ngx-extended-pdf-viewer>
         </mat-card-content>
       </mat-card>
+    </div>
+
+    <!-- 🔻 iframe preview (always visible at bottom) -->
+    <div class="iframe-container">
+      <h3>Iframe Preview (Fallback/Alternative View)</h3>
+      <iframe [src]="iframeUrl" width="100%" height="600px" frameborder="0"></iframe>
     </div>
   </mat-card-content>
 </mat-card>
